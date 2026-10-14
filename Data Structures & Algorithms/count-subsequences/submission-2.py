@@ -1,0 +1,15 @@
+class Solution:
+    def numDistinct(self, s: str, t: str) -> int:
+        dp = [0] * (len(t)+1) 
+
+        #the first column would be 1 -> 1 way to create a subsequence of an empty t from non empty s
+        dp[0] = 1
+        
+
+        for i in range(1, len(s)+1):
+            for j in range(len(t), 0, -1):
+                if s[i-1] == t[j-1]:
+                    dp[j] = dp[j-1] + dp[j]
+
+        
+        return dp[len(t)]
