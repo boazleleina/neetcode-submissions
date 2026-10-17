@@ -1,0 +1,25 @@
+class Solution:
+    def isNStraightHand(self, hand: List[int], groupSize: int) -> bool:
+        if len(hand) % groupSize != 0:
+            return False
+        
+        counts = Counter(hand)
+        
+        starters = list(counts.keys())
+
+        heapq.heapify(starters)
+
+        while starters:
+            v = heapq.heappop(starters)
+
+            if counts[v] == 0:
+                continue
+            
+            freq = counts[v]
+
+            for i in range(v, v+groupSize):
+                if counts[i] < freq:
+                    return False
+                counts[i] -= freq
+        
+        return True
